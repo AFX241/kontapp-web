@@ -1,0 +1,105 @@
+```html
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculadora Renta 5ta 2026 | KontApp</title>
+
+<style>
+body{
+font-family:Segoe UI,Arial,sans-serif;
+background:#f5f7fb;
+padding:40px;
+max-width:800px;
+margin:auto;
+}
+
+h1{
+color:#0b57d0;
+text-align:center;
+}
+
+.card{
+background:white;
+padding:30px;
+border-radius:15px;
+box-shadow:0 4px 12px rgba(0,0,0,.1);
+}
+
+input{
+width:100%;
+padding:12px;
+margin:10px 0;
+border:1px solid #ccc;
+border-radius:8px;
+}
+
+button{
+background:#0b57d0;
+color:white;
+padding:15px;
+border:none;
+border-radius:8px;
+cursor:pointer;
+width:100%;
+font-weight:bold;
+}
+
+.resultado{
+margin-top:20px;
+font-size:22px;
+font-weight:bold;
+color:#0b57d0;
+}
+</style>
+</head>
+
+<body>
+
+<h1>Calculadora de Renta de 5ta Categoría 2026</h1>
+
+<div class="card">
+
+<label>Sueldo Mensual (S/)</label>
+<input type="number" id="sueldo">
+
+<button onclick="calcular()">
+Calcular
+</button>
+
+<div class="resultado" id="resultado"></div>
+
+</div>
+
+<script>
+
+function calcular(){
+
+const sueldo =
+parseFloat(document.getElementById("sueldo").value);
+
+if(!sueldo){
+return;
+}
+
+const anual = sueldo * 14;
+
+const deduccion = 38500;
+
+const rentaNeta =
+Math.max(0, anual - deduccion);
+
+document.getElementById("resultado").innerHTML =
+"Ingreso anual: S/ " +
+anual.toLocaleString() +
+"<br>Renta neta proyectada: S/ " +
+rentaNeta.toLocaleString();
+
+}
+
+</script>
+
+</body>
+</html>
+```
