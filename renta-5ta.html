@@ -82,18 +82,50 @@ if(!sueldo){
 return;
 }
 
-const anual = sueldo * 14;
+const UIT = 5500;
 
-const deduccion = 38500;
+const ingresoAnual = sueldo * 14;
 
-const rentaNeta =
-Math.max(0, anual - deduccion);
+const deduccion7UIT = UIT * 7;
+
+const rentaImponible =
+Math.max(0, ingresoAnual - deduccion7UIT);
+
+let impuesto = 0;
+
+if(rentaImponible <= 5 * UIT){
+
+impuesto = rentaImponible * 0.08;
+
+}else{
+
+const tramo1 = 5 * UIT;
+const exceso = rentaImponible - tramo1;
+
+impuesto = (tramo1 * 0.08) +
+(exceso * 0.14);
+
+}
+
+const retencionMensual =
+impuesto / 12;
 
 document.getElementById("resultado").innerHTML =
-"Ingreso anual: S/ " +
-anual.toLocaleString() +
-"<br>Renta neta proyectada: S/ " +
-rentaNeta.toLocaleString();
+
+"<strong>Ingreso anual:</strong> S/ " +
+ingresoAnual.toLocaleString() +
+
+"<br><strong>Deducción 7 UIT:</strong> S/ " +
+deduccion7UIT.toLocaleString() +
+
+"<br><strong>Renta imponible:</strong> S/ " +
+rentaImponible.toLocaleString() +
+
+"<br><strong>Impuesto anual proyectado:</strong> S/ " +
+impuesto.toFixed(2) +
+
+"<br><strong>Retención mensual estimada:</strong> S/ " +
+retencionMensual.toFixed(2);
 
 }
 
