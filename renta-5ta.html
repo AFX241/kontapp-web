@@ -180,8 +180,7 @@ margin-top:15px;">
 
 function calcular(){
 
-const sueldo =
-parseFloat(document.getElementById("sueldo").value) || 0;
+const sueldo = parseFloat(document.getElementById("sueldo").value) || 0;
 
 const tieneAF =
 document.getElementById("af").checked;
@@ -197,6 +196,9 @@ parseFloat(document.getElementById("comisiones").value) || 0;
 
 const bonos =
 parseFloat(document.getElementById("bonos").value) || 0;
+
+const mes =
+parseInt(document.getElementById("mes").value);
 
 const UIT = 5500;
 
@@ -228,66 +230,81 @@ ingresoAnual - deduccion7UIT
 let impuesto = 0;
 let restante = rentaImponible;
 
+// Hasta 5 UIT = 8%
 let tramo =
 Math.min(restante, UIT * 5);
 
 impuesto += tramo * 0.08;
 restante -= tramo;
 
+// Hasta 20 UIT = 14%
 if(restante > 0){
 tramo = Math.min(restante, UIT * 15);
 impuesto += tramo * 0.14;
 restante -= tramo;
 }
 
+// Hasta 35 UIT = 17%
 if(restante > 0){
 tramo = Math.min(restante, UIT * 15);
 impuesto += tramo * 0.17;
 restante -= tramo;
 }
 
+// Hasta 45 UIT = 20%
 if(restante > 0){
 tramo = Math.min(restante, UIT * 10);
 impuesto += tramo * 0.20;
 restante -= tramo;
 }
 
+// Más de 45 UIT = 30%
 if(restante > 0){
 impuesto += restante * 0.30;
 }
 
+const mesesPendientes =
+13 - mes;
+
 const retencionMensual =
-impuesto / 12;
+mesesPendientes > 0
+? impuesto / mesesPendientes
+: impuesto;
 
-document.getElementById("resultado").innerHTML = `
+document.getElementById("resultado").innerHTML =
 
-<strong>Remuneración Computable:</strong>
-S/ ${remuneracion.toLocaleString()}
+"<strong>Remuneración Computable:</strong> S/ " +
+remuneracion.toLocaleString() +
 
-<br><strong>Gratificaciones:</strong>
-S/ ${gratificaciones.toLocaleString()}
+"<br><strong>Gratificaciones:</strong> S/ " +
+gratificaciones.toLocaleString() +
 
-<br><strong>Bonificación Extraordinaria:</strong>
-S/ ${bonificacionExtra.toFixed(2)}
+"<br><strong>Bonificación Extraordinaria:</strong> S/ " +
+bonificacionExtra.toFixed(2) +
 
-<br><strong>Ingreso Anual Proyectado:</strong>
-S/ ${ingresoAnual.toLocaleString()}
+"<br><strong>Ingreso Anual Proyectado:</strong> S/ " +
+ingresoAnual.toLocaleString() +
 
-<hr>
+"<hr>" +
 
-<strong>7 UIT Deducibles:</strong>
-S/ ${deduccion7UIT.toLocaleString()}
+"<strong>7 UIT Deducibles:</strong> S/ " +
+deduccion7UIT.toLocaleString() +
 
-<br><strong>Renta Imponible:</strong>
-S/ ${rentaImponible.toLocaleString()}
+"<br><strong>Renta Imponible:</strong> S/ " +
+rentaImponible.toLocaleString() +
 
-<br><strong>Impuesto Anual de 5ta:</strong>
-S/ ${impuesto.toFixed(2)}
+"<br><strong>Impuesto Anual:</strong> S/ " +
+impuesto.toFixed(2) +
 
-<br><strong>Retención Mensual Estimada:</strong>
-S/ ${retencionMensual.toFixed(2)}
+"<br><strong>Mes de Cálculo:</strong> " +
+mes +
 
-`;
+"<br><strong>Meses Pendientes:</strong> " +
+mesesPendientes +
+
+"<br><strong>Retención Mensual Estimada:</strong> S/ " +
+retencionMensual.toFixed(2);
+
 }
 
 function limpiar(){
