@@ -75,6 +75,23 @@ color:#0b57d0;
 <label>Sueldo Mensual (S/)</label>
 <input type="number" id="sueldo">
 
+ <label>Mes de ingreso</label>
+
+<select id="mesIngreso">
+<option value="12">Enero</option>
+<option value="11">Febrero</option>
+<option value="10">Marzo</option>
+<option value="9">Abril</option>
+<option value="8">Mayo</option>
+<option value="7">Junio</option>
+<option value="6">Julio</option>
+<option value="5">Agosto</option>
+<option value="4">Septiembre</option>
+<option value="3">Octubre</option>
+<option value="2">Noviembre</option>
+<option value="1">Diciembre</option>
+</select> 
+
 <label>Régimen de Salud</label>
 
 <select id="salud">
@@ -82,8 +99,10 @@ color:#0b57d0;
   <option value="0.0675">EPS (6.75%)</option>
 </select>
 
-<label>Asignación Familiar (Opcional)</label>
-<input type="number" id="af" value="0">
+<label>
+<input type="checkbox" id="af">
+ Tiene Asignación Familiar (S/ 113)
+</label>
 
 <label>Horas Extras Promedio Mensual (Opcional)</label>
 <input type="number" id="hextras" value="0">
@@ -122,11 +141,14 @@ alert("Ingrese un sueldo");
 return;
 }
 
+const mesesLaborados =
+parseInt(document.getElementById("mesIngreso").value);  
+
 const salud =
 parseFloat(document.getElementById("salud").value);
 
 const af =
-parseFloat(document.getElementById("af").value) || 0;
+document.getElementById("af").checked ? 113 : 0;
 
 const hextras =
 parseFloat(document.getElementById("hextras").value) || 0;
@@ -146,7 +168,7 @@ const bonificacionExtra =
 gratificaciones * salud;
 
 const ingresoAnual =
-(remuneracionMensual * 12) +
+(remuneracionMensual * mesesLaborados) +
 gratificaciones +
 bonificacionExtra;
 
