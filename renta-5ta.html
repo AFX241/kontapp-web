@@ -100,7 +100,15 @@ return;
 
 const UIT = 5500;
 
-const ingresoAnual = sueldo * 14;
+const gratificaciones = sueldo * 2;
+
+const bonificacionExtra =
+gratificaciones * 0.09;
+
+const ingresoAnual =
+(sueldo * 12) +
+gratificaciones +
+bonificacionExtra;
 
 const deduccion7UIT = UIT * 7;
 
