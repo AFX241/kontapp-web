@@ -290,6 +290,20 @@ S/ ${retencionMensual.toFixed(2)}
 `;
 }
 
+function limpiar(){
+
+document.getElementById("sueldo").value = "";
+document.getElementById("af").checked = false;
+document.getElementById("salud").value = "0.09";
+document.getElementById("hextras").value = "0";
+document.getElementById("comisiones").value = "0";
+document.getElementById("bonos").value = "0";
+document.getElementById("mes").value = "1";
+
+document.getElementById("resultado").innerHTML = "";
+
+}  
+
 </script>
 
 </body>
