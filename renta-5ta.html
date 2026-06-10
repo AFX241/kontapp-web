@@ -187,23 +187,23 @@ let tramo = Math.min(restante, UIT * 5);
 impuesto += tramo * 0.08;
 restante -= tramo;
 
-// Segundo tramo: 15 UIT al 14%
+// Segundo tramo: 20 UIT al 14%
 if(restante > 0){
-tramo = Math.min(restante, UIT * 15);
+tramo = Math.min(restante, UIT * 20);
 impuesto += tramo * 0.14;
 restante -= tramo;
 }
 
-// Tercer tramo: 15 UIT al 17%
+// Tercer tramo: 35 UIT al 17%
 if(restante > 0){
-tramo = Math.min(restante, UIT * 15);
+tramo = Math.min(restante, UIT * 35);
 impuesto += tramo * 0.17;
 restante -= tramo;
 }
 
-// Cuarto tramo: 10 UIT al 20%
+// Cuarto tramo: 45 UIT al 20%
 if(restante > 0){
-tramo = Math.min(restante, UIT * 10);
+tramo = Math.min(restante, UIT * 45);
 impuesto += tramo * 0.20;
 restante -= tramo;
 }
