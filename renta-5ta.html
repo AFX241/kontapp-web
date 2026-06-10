@@ -200,13 +200,7 @@ id="telefonoLead">
 <option>Asesoría Tributaria</option>
 </select>
 
-<a
-href="https://wa.me/51960621456"
-target="_blank"
-class="btn btn-primary"
-style="display:block;text-align:center;margin-top:15px;">
-Solicitar Asesoría Gratuita
-</a>
+<button onclick="contactar()" style=" width:100%; background:#0b57d0; color:white; padding:15px; border:none; border-radius:8px; cursor:pointer; font-weight:bold; margin-top:15px;"> Solicitar Asesoría Gratuita </button>
 
 </div>
 
@@ -353,9 +347,9 @@ mesesPendientes +
 "<br><strong>Retención Mensual Estimada:</strong> S/ " +
 retencionMensual.toFixed(2);
 
-}
+document.getElementById("leadForm").style.display = "block";  
 
-document.getElementById("leadForm").style.display = "block";
+}
 
 function limpiar(){
 
@@ -369,8 +363,57 @@ document.getElementById("mes").value = "1";
 
 document.getElementById("resultado").innerHTML = "";
 
-}  
+}
 
+function contactar(){
+
+const nombre =
+document.getElementById("nombreLead").value;
+
+const correo =
+document.getElementById("correoLead").value;
+
+const telefono =
+document.getElementById("telefonoLead").value;
+
+const interes =
+document.getElementById("interes").value;
+
+const mensaje =
+`Hola, soy ${nombre}.
+
+He utilizado la Calculadora de Quinta Categoría de KontApp.
+
+Estoy interesado en:
+
+${interes}`;
+
+if(telefono.trim() !== ""){
+
+window.open(
+`https://wa.me/51960621456?text=${encodeURIComponent(mensaje)}`,
+"_blank"
+);
+
+return;
+
+}
+
+if(correo.trim() !== ""){
+
+window.location.href =
+`mailto:contacto@kontapp.pe?subject=Consulta desde KontApp&body=${encodeURIComponent(mensaje)}`;
+
+return;
+
+}
+
+alert(
+"Ingrese un correo o un número de WhatsApp."
+);
+
+}
+ 
 </script>
 
 </body>
