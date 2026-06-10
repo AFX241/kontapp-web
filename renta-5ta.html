@@ -75,42 +75,47 @@ color:#0b57d0;
 <label>Sueldo Mensual (S/)</label>
 <input type="number" id="sueldo">
 
- <label>Mes de ingreso</label>
-
-<select id="mesIngreso">
-<option value="12">Enero</option>
-<option value="11">Febrero</option>
-<option value="10">Marzo</option>
-<option value="9">Abril</option>
-<option value="8">Mayo</option>
-<option value="7">Junio</option>
-<option value="6">Julio</option>
-<option value="5">Agosto</option>
-<option value="4">Septiembre</option>
-<option value="3">Octubre</option>
-<option value="2">Noviembre</option>
-<option value="1">Diciembre</option>
-</select> 
+<label>
+<input type="checkbox" id="af">
+ Tiene Asignación Familiar (S/ 113)
+</label>
 
 <label>Régimen de Salud</label>
-
 <select id="salud">
-  <option value="0.09">EsSalud (9%)</option>
-  <option value="0.0675">EPS (6.75%)</option>
+    <option value="0.09">EsSalud (9%)</option>
+    <option value="0.0675">EPS (6.75%)</option>
 </select>
 
-<label>Asignación Familiar</label>
-
-<select id="af">
-  <option value="0">No</option>
-  <option value="113">Sí (S/ 113)</option>
-</select>
-
-<label>Horas Extras Promedio Mensual (Opcional)</label>
+<label>Horas Extras Promedio Mensual</label>
 <input type="number" id="hextras" value="0">
 
-<label>Comisiones / Bonos Mensuales (Opcional)</label>
-<input type="number" id="bonos" value="0">    
+<label>Comisiones Promedio Mensual</label>
+<input type="number" id="comisiones" value="0">
+
+<label>Bonos Mensuales</label>
+<input type="number" id="bonos" value="0">
+
+<label>Mes de cálculo</label>
+<select id="mes">
+    <option value="1">Enero</option>
+    <option value="2">Febrero</option>
+    <option value="3">Marzo</option>
+    <option value="4">Abril</option>
+    <option value="5">Mayo</option>
+    <option value="6">Junio</option>
+    <option value="7">Julio</option>
+    <option value="8">Agosto</option>
+    <option value="9">Septiembre</option>
+    <option value="10">Octubre</option>
+    <option value="11">Noviembre</option>
+    <option value="12">Diciembre</option>
+</select>
+
+<button onclick="calcular()">
+Calcular Quinta Categoría
+</button>
+
+<div id="resultado" class="resultado"></div>
 
 <button onclick="calcular()">
 Calcular
@@ -136,128 +141,114 @@ margin-top:15px;">
 
 function calcular(){
 
-const sueldo = parseFloat(document.getElementById("sueldo").value);
+const sueldo =
+parseFloat(document.getElementById("sueldo").value) || 0;
 
-if(!sueldo){
-alert("Ingrese un sueldo");
-return;
-}
-
-const mesesLaborados =
-parseInt(document.getElementById("mesIngreso").value);  
+const tieneAF =
+document.getElementById("af").checked;
 
 const salud =
 parseFloat(document.getElementById("salud").value);
 
-const af =
-parseFloat(document.getElementById("af").value);
-
 const hextras =
 parseFloat(document.getElementById("hextras").value) || 0;
+
+const comisiones =
+parseFloat(document.getElementById("comisiones").value) || 0;
 
 const bonos =
 parseFloat(document.getElementById("bonos").value) || 0;
 
 const UIT = 5500;
 
-const remuneracionMensual =
-sueldo + af + hextras + bonos;
+const af = tieneAF ? 113 : 0;
+
+const remuneracion =
+sueldo + af + hextras + comisiones + bonos;
 
 const gratificaciones =
-remuneracionMensual * 2;
+remuneracion * 2;
 
 const bonificacionExtra =
 gratificaciones * salud;
 
 const ingresoAnual =
-(remuneracionMensual * mesesLaborados) +
+(remuneracion * 12) +
 gratificaciones +
 bonificacionExtra;
 
-const deduccion7UIT = UIT * 7;
+const deduccion7UIT =
+UIT * 7;
 
 const rentaImponible =
-Math.max(0, ingresoAnual - deduccion7UIT);
+Math.max(
+0,
+ingresoAnual - deduccion7UIT
+);
 
 let impuesto = 0;
 let restante = rentaImponible;
 
-// Primer tramo: 5 UIT al 8%
-let tramo = Math.min(restante, UIT * 5);
+let tramo =
+Math.min(restante, UIT * 5);
+
 impuesto += tramo * 0.08;
 restante -= tramo;
 
-// Segundo tramo: 20 UIT al 14%
 if(restante > 0){
-tramo = Math.min(restante, UIT * 20);
+tramo = Math.min(restante, UIT * 15);
 impuesto += tramo * 0.14;
 restante -= tramo;
 }
 
-// Tercer tramo: 35 UIT al 17%
 if(restante > 0){
-tramo = Math.min(restante, UIT * 35);
+tramo = Math.min(restante, UIT * 15);
 impuesto += tramo * 0.17;
 restante -= tramo;
 }
 
-// Cuarto tramo: 45 UIT al 20%
 if(restante > 0){
-tramo = Math.min(restante, UIT * 45);
+tramo = Math.min(restante, UIT * 10);
 impuesto += tramo * 0.20;
 restante -= tramo;
 }
 
-// Quinto tramo: exceso al 30%
 if(restante > 0){
 impuesto += restante * 0.30;
 }
 
-const retencionMensual = impuesto / 12;
+const retencionMensual =
+impuesto / 12;
 
-document.getElementById("resultado").innerHTML =
+document.getElementById("resultado").innerHTML = `
 
-"<strong>Sueldo:</strong> S/ " +
-sueldo.toLocaleString() +
+<strong>Remuneración Computable:</strong>
+S/ ${remuneracion.toLocaleString()}
 
-"<br><strong>Asignación Familiar:</strong> S/ " +
-af.toLocaleString() +
+<br><strong>Gratificaciones:</strong>
+S/ ${gratificaciones.toLocaleString()}
 
-"<br><strong>Horas Extras:</strong> S/ " +
-hextras.toLocaleString() +
+<br><strong>Bonificación Extraordinaria:</strong>
+S/ ${bonificacionExtra.toFixed(2)}
 
-"<br><strong>Bonos/Comisiones:</strong> S/ " +
-bonos.toLocaleString() +
+<br><strong>Ingreso Anual Proyectado:</strong>
+S/ ${ingresoAnual.toLocaleString()}
 
-"<br><strong>Remuneración Computable:</strong> S/ " +
-remuneracionMensual.toLocaleString() +
+<hr>
 
-"<br><br>"+
-  
-"<strong>12 Sueldos:</strong> S/ " +
-(sueldo * 12).toLocaleString() +
+<strong>7 UIT Deducibles:</strong>
+S/ ${deduccion7UIT.toLocaleString()}
 
-"<br><strong>Gratificaciones:</strong> S/ " +
-gratificaciones.toLocaleString() +
+<br><strong>Renta Imponible:</strong>
+S/ ${rentaImponible.toLocaleString()}
 
-"<br><strong>Bonificación Extraordinaria:</strong> S/ " +
-bonificacionExtra.toFixed(2) +
+<br><strong>Impuesto Anual de 5ta:</strong>
+S/ ${impuesto.toFixed(2)}
 
-"<br><strong>Ingreso Anual:</strong> S/ " +
-ingresoAnual.toLocaleString() +
+<br><strong>Retención Mensual Estimada:</strong>
+S/ ${retencionMensual.toFixed(2)}
 
-"<br><br><strong>7 UIT Deducibles:</strong> S/ " +
-deduccion7UIT.toLocaleString() +
-
-"<br><strong>Renta Imponible:</strong> S/ " +
-rentaImponible.toLocaleString() +
-
-"<br><strong>Impuesto Anual de 5ta:</strong> S/ " +
-impuesto.toFixed(2) +
-
-"<br><strong>Retención Mensual Estimada:</strong> S/ " +
-retencionMensual.toFixed(2);
-
+`;
 }
 
 </script>
