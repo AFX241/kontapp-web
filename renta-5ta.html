@@ -70,6 +70,24 @@ font-size:18px;
 line-height:2;
 color:#0b57d0;
 }
+
+.botones{
+display:flex;
+gap:10px;
+margin-top:15px;
+}
+
+.botones button{
+flex:1;
+}
+
+.btn-limpiar{
+background:#6c757d;
+}
+
+.btn-limpiar:hover{
+background:#5a6268;
+}  
   
 </style>
 </head>
@@ -130,9 +148,17 @@ style="width:auto;margin:0;">
     <option value="12">Diciembre</option>
 </select>
 
+<div class="botones">
+
 <button onclick="calcular()">
 Calcular Quinta Categoría
 </button>
+
+<button class="btn-limpiar" onclick="limpiar()">
+Limpiar
+</button>
+
+</div>
 
 <div id="resultado" class="resultado"></div>
 
