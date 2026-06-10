@@ -110,6 +110,32 @@ const ingresoAnual =
 gratificaciones +
 bonificacionExtra;
 
+const UIT = 5500;
+
+const deduccion7UIT = UIT * 7;
+
+const rentaImponible =
+Math.max(0, ingresoAnual - deduccion7UIT);
+
+let impuesto = 0;
+
+if(rentaImponible <= 5 * UIT){
+
+impuesto = rentaImponible * 0.08;
+
+}else{
+
+const tramo1 = 5 * UIT;
+
+impuesto =
+(tramo1 * 0.08) +
+((rentaImponible - tramo1) * 0.14);
+
+}
+
+const retencionMensual =
+impuesto / 12;
+
 const deduccion7UIT = UIT * 7;
 
 const rentaImponible =
