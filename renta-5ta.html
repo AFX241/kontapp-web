@@ -99,10 +99,12 @@ color:#0b57d0;
   <option value="0.0675">EPS (6.75%)</option>
 </select>
 
-<label>
-<input type="checkbox" id="af">
- Tiene Asignación Familiar (S/ 113)
-</label>
+<label>Asignación Familiar</label>
+
+<select id="af">
+  <option value="0">No</option>
+  <option value="113">Sí (S/ 113)</option>
+</select>
 
 <label>Horas Extras Promedio Mensual (Opcional)</label>
 <input type="number" id="hextras" value="0">
@@ -148,7 +150,7 @@ const salud =
 parseFloat(document.getElementById("salud").value);
 
 const af =
-document.getElementById("af").checked ? 113 : 0;
+parseFloat(document.getElementById("af").value);
 
 const hextras =
 parseFloat(document.getElementById("hextras").value) || 0;
