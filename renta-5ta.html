@@ -368,13 +368,13 @@ document.getElementById("resultado").innerHTML = "";
 function contactar(){
 
 const nombre =
-document.getElementById("nombreLead").value;
+document.getElementById("nombreLead").value.trim();
 
 const correo =
-document.getElementById("correoLead").value;
+document.getElementById("correoLead").value.trim();
 
 const telefono =
-document.getElementById("telefonoLead").value;
+document.getElementById("telefonoLead").value.trim();
 
 const interes =
 document.getElementById("interes").value;
@@ -388,7 +388,31 @@ Estoy interesado en:
 
 ${interes}`;
 
-if(telefono.trim() !== ""){
+if(correo !== "" && telefono !== ""){
+
+const usarWhatsapp = confirm(
+"Has ingresado correo y WhatsApp.\n\nAceptar = WhatsApp\nCancelar = Correo"
+);
+
+if(usarWhatsapp){
+
+window.open(
+`https://wa.me/51960621456?text=${encodeURIComponent(mensaje)}`,
+"_blank"
+);
+
+}else{
+
+window.location.href =
+`mailto:contacto@kontapp.pe?subject=Consulta desde KontApp&body=${encodeURIComponent(mensaje)}`;
+
+}
+
+return;
+
+}
+
+if(telefono !== ""){
 
 window.open(
 `https://wa.me/51960621456?text=${encodeURIComponent(mensaje)}`,
@@ -399,7 +423,7 @@ return;
 
 }
 
-if(correo.trim() !== ""){
+if(correo !== ""){
 
 window.location.href =
 `mailto:contacto@kontapp.pe?subject=Consulta desde KontApp&body=${encodeURIComponent(mensaje)}`;
@@ -408,9 +432,7 @@ return;
 
 }
 
-alert(
-"Ingrese un correo o un número de WhatsApp."
-);
+alert("Ingrese un correo o un número de WhatsApp.");
 
 }
  
