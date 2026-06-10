@@ -136,8 +136,17 @@ impuesto / 12;
 
 document.getElementById("resultado").innerHTML =
 
-"<strong>Ingreso anual:</strong> S/ " +
-ingresoAnual.toLocaleString() +
+"<strong>12 Sueldos:</strong> S/ " +
+(sueldo * 12).toLocaleString() +
+
+"<br><strong>Gratificaciones:</strong> S/ " +
+gratificaciones.toLocaleString() +
+
+"<br><strong>Bonificación Extraordinaria:</strong> S/ " +
+bonificacionExtra.toFixed(2) +
+
+"<br><strong>Ingreso anual proyectado:</strong> S/ " +
+ingresoAnual.toLocaleString()
 
 "<br><strong>Deducción 7 UIT:</strong> S/ " +
 deduccion7UIT.toLocaleString() +
