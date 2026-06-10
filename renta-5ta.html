@@ -162,6 +162,54 @@ Limpiar
 
 <div id="resultado" class="resultado"></div>
 
+<div id="leadForm" style="
+display:none;
+margin-top:25px;
+padding:20px;
+background:#ffffff;
+border:1px solid #ddd;
+border-radius:10px;
+">
+
+<h3>¿Necesitas ayuda con SUNAT o Contabilidad?</h3>
+
+<p>
+Déjanos tus datos y te contactaremos sin costo.
+</p>
+
+<input
+type="text"
+placeholder="Nombre"
+id="nombreLead">
+
+<input
+type="email"
+placeholder="Correo"
+id="correoLead">
+
+<input
+type="text"
+placeholder="WhatsApp"
+id="telefonoLead">
+
+<select id="interes">
+<option>Declaración de Renta</option>
+<option>Planillas</option>
+<option>SIRE</option>
+<option>Contabilidad Mensual</option>
+<option>Asesoría Tributaria</option>
+</select>
+
+<a
+href="https://wa.me/51960621456"
+target="_blank"
+class="btn btn-primary"
+style="display:block;text-align:center;margin-top:15px;">
+Solicitar Asesoría Gratuita
+</a>
+
+</div>
+
 <a href="/"
 style="
 display:inline-block;
@@ -306,6 +354,8 @@ mesesPendientes +
 retencionMensual.toFixed(2);
 
 }
+
+document.getElementById("leadForm").style.display = "block";
 
 function limpiar(){
 
