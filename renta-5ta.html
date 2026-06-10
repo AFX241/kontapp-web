@@ -91,74 +91,63 @@ margin-top:15px;">
 
 function calcular(){
 
-const sueldo =
-parseFloat(document.getElementById("sueldo").value);
+const sueldo = parseFloat(document.getElementById("sueldo").value);
 
 if(!sueldo){
+alert("Ingrese un sueldo");
 return;
 }
 
 const UIT = 5500;
 
 const gratificaciones = sueldo * 2;
-
-const bonificacionExtra =
-gratificaciones * 0.09;
+const bonificacionExtra = gratificaciones * 0.09;
 
 const ingresoAnual =
 (sueldo * 12) +
 gratificaciones +
 bonificacionExtra;
 
-const UIT = 5500;
-
 const deduccion7UIT = UIT * 7;
 
 const rentaImponible =
 Math.max(0, ingresoAnual - deduccion7UIT);
 
 let impuesto = 0;
+let restante = rentaImponible;
 
-if(rentaImponible <= 5 * UIT){
+// Primer tramo: 5 UIT al 8%
+let tramo = Math.min(restante, UIT * 5);
+impuesto += tramo * 0.08;
+restante -= tramo;
 
-impuesto = rentaImponible * 0.08;
-
-}else{
-
-const tramo1 = 5 * UIT;
-
-impuesto =
-(tramo1 * 0.08) +
-((rentaImponible - tramo1) * 0.14);
-
+// Segundo tramo: 15 UIT al 14%
+if(restante > 0){
+tramo = Math.min(restante, UIT * 15);
+impuesto += tramo * 0.14;
+restante -= tramo;
 }
 
-const retencionMensual =
-impuesto / 12;
-
-const deduccion7UIT = UIT * 7;
-
-const rentaImponible =
-Math.max(0, ingresoAnual - deduccion7UIT);
-
-let impuesto = 0;
-
-if(rentaImponible <= 5 * UIT){
-
-impuesto = rentaImponible * 0.08;
-
-}else{
-
-const tramo1 = 5 * UIT;
-const exceso = rentaImponible - tramo1;
-
-impuesto = (tramo1 * 0.08) +
-(exceso * 0.14);
-
+// Tercer tramo: 15 UIT al 17%
+if(restante > 0){
+tramo = Math.min(restante, UIT * 15);
+impuesto += tramo * 0.17;
+restante -= tramo;
 }
 
-const retencionMensual =
-impuesto / 12;
+// Cuarto tramo: 10 UIT al 20%
+if(restante > 0){
+tramo = Math.min(restante, UIT * 10);
+impuesto += tramo * 0.20;
+restante -= tramo;
+}
+
+// Quinto tramo: exceso al 30%
+if(restante > 0){
+impuesto += restante * 0.30;
+}
+
+const retencionMensual = impuesto / 12;
 
 document.getElementById("resultado").innerHTML =
 
@@ -171,19 +160,19 @@ gratificaciones.toLocaleString() +
 "<br><strong>Bonificación Extraordinaria:</strong> S/ " +
 bonificacionExtra.toFixed(2) +
 
-"<br><strong>Ingreso anual proyectado:</strong> S/ " +
+"<br><strong>Ingreso Anual:</strong> S/ " +
 ingresoAnual.toLocaleString() +
 
-"<br><br><strong>Deducción 7 UIT:</strong> S/ " +
+"<br><br><strong>7 UIT Deducibles:</strong> S/ " +
 deduccion7UIT.toLocaleString() +
 
-"<br><strong>Renta imponible:</strong> S/ " +
+"<br><strong>Renta Imponible:</strong> S/ " +
 rentaImponible.toLocaleString() +
 
-"<br><strong>Impuesto anual de 5ta:</strong> S/ " +
+"<br><strong>Impuesto Anual de 5ta:</strong> S/ " +
 impuesto.toFixed(2) +
 
-"<br><strong>Retención mensual estimada:</strong> S/ " +
+"<br><strong>Retención Mensual Estimada:</strong> S/ " +
 retencionMensual.toFixed(2);
 
 }
