@@ -202,17 +202,4 @@ Total: S/ ${total.toFixed(2)}`;
 
       </div>
     </main>
-  );
-
-return calcularQuinta({
-  sueldo: Number(sueldo) || 0,
-  gratificaciones: Number(gratificaciones),
-  bonificacion: Number(bonificacion),
-  asignacionFamiliar: asignacion === "si",
-  horasExtras: Number(horasExtras) || 0,
-  bonos: Number(bonos) || 0,
-  mesIngreso,
-  mesCalculo,
-});
-
-}
+  );}
